@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Football Sounds for Relaxing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="66" class="key">
+      <kbd>B</kbd>
+      <span class="sound">bounce</span>
+    </div>
+
+    <div data-key="67" class="key">
+            <kbd>C</kbd>
+            <span class="sound">crossbar</span>
+    </div>
+
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">drop</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">goal</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">clap</span>
+    </div>
+    
+    <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">kick</span>
+        </div>
+  </div>
+
+  <audio data-key="75" src="sound/kick.mp3"></audio>
+  <audio data-key="74" src="sound/clap.mp3"></audio>
+  <audio data-key="67" src="sound/crossbar.mp3"></audio>
+  <audio data-key="71" src="sound/goal.mp3"></audio>
+  <audio data-key="68" src="sound/drop.mp3"></audio>
+  <audio data-key="66" src="sound/bounce.mp3"></audio>
+
+  <script>
+  function playSound(e){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return;
+    audio.currentTime=0
+    audio.play();
+    key.classList.add('playing');
+}
+
+function removeTransition(e){
+    if(e.propertyName!== 'transform') return;
+    this.classList.remove('playing');
+}
+
+const keys = Array.from(document.querySelectorAll('.key'));
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
+  </script>
+</body>
+
+</html>
