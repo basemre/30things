@@ -1,4 +1,5 @@
 from requests import get
+import requests
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
@@ -27,6 +28,14 @@ def log_error(e):
 raw_html = getResponse('https://trakt.tv/shows/trending')
 html = BeautifulSoup(raw_html, 'html.parser')
 for i, li in enumerate(html.select('h3')):
-    '''for x, lst in enumerate(html.select('h4')):
-        print(x, lst.text)'''
     print(i, li.text)
+
+#trending movies
+#need to be refactored
+raw_trend_movies = requests.get('https://trakt.tv/movies/trending')
+soup_trend_movies = BeautifulSoup(raw_trend_movies.text, 'html.parser')
+trend_movies = []
+for movie in soup_trend_movies.select('.titles'):
+    trend_movies.append(movie.text)
+
+print(trend_movies)
